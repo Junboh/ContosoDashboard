@@ -5,6 +5,11 @@
 **Status**: Draft
 **Input**: User description: "--file StakeholderDocs/document-upload-and-management-feature.md"
 
+## Clarifications
+
+### Session 2026-06-25
+- Q: Should training use a real virus scan integration or a local validation stub? → A: Use a local scan stub that validates file type/size and logs the file as scanned.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Upload and Organize Documents (Priority: P1)
@@ -66,15 +71,16 @@ Users need to maintain document metadata, replace files, delete documents they o
 - **FR-001**: System MUST allow authenticated users to upload documents with required metadata, including title and category.
 - **FR-002**: System MUST support PDF, Word, Excel, PowerPoint, text, JPEG, and PNG file types.
 - **FR-003**: System MUST reject uploads larger than 25 MB and unsupported file types with clear errors.
-- **FR-004**: System MUST store uploaded files outside `wwwroot` and persist document metadata in the database.
-- **FR-005**: System MUST allow users to view documents they uploaded and documents shared with them.
-- **FR-006**: System MUST allow authorized users to download documents they have permission to access.
-- **FR-007**: System MUST allow document owners to edit document metadata and replace the stored file.
-- **FR-008**: System MUST allow document owners and project managers to delete documents they are permitted to remove.
-- **FR-009**: System MUST allow users to search documents by title, description, tags, uploader name, and associated project.
-- **FR-010**: System MUST enforce authorization checks for document access, download, preview, edit, and delete actions.
-- **FR-011**: System MUST record document activity events for upload, download, delete, and share operations.
-- **FR-012**: System MUST provide an implementation of `IFileStorageService` for local filesystem storage and support future migration to cloud storage.
+- **FR-004**: System MUST scan uploaded files using a local validation stub appropriate for training, validating file type and size before storage.
+- **FR-005**: System MUST store uploaded files outside `wwwroot` and persist document metadata in the database.
+- **FR-006**: System MUST allow users to view documents they uploaded and documents shared with them.
+- **FR-007**: System MUST allow authorized users to download documents they have permission to access.
+- **FR-008**: System MUST allow document owners to edit document metadata and replace the stored file.
+- **FR-009**: System MUST allow document owners and project managers to delete documents they are permitted to remove.
+- **FR-010**: System MUST allow users to search documents by title, description, tags, uploader name, and associated project.
+- **FR-011**: System MUST enforce authorization checks for document access, download, preview, edit, and delete actions.
+- **FR-012**: System MUST record document activity events for upload, download, delete, and share operations.
+- **FR-013**: System MUST provide an implementation of `IFileStorageService` for local filesystem storage and support future migration to cloud storage.
 
 ### Key Entities *(include if feature involves data)*
 
