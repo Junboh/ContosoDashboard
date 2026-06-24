@@ -1,50 +1,54 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+Version change: n/a → 1.0.0
+Modified principles: added 5 project-specific principles
+Added sections: Project Constraints and Standards; Development Workflow and Quality Gates
+Removed sections: none
+Templates reviewed: 
+- ✅ .specify/templates/constitution-template.md
+- ✅ .specify/templates/plan-template.md
+- ✅ .specify/templates/spec-template.md
+- ✅ .specify/templates/tasks-template.md
+- ✅ .github/copilot-instructions.md
+- ✅ .specify/extensions.yml
+Follow-up TODOs: none
+-->
+
+# ContosoDashboard Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Training-Safe Data and Authentication
+The ContosoDashboard codebase MUST preserve a training-safe environment by using mock or local credentials only, never storing production secrets, and never requiring real identity provider accounts for the default learning flow. All data access MUST be constrained to the local SQLite database and seeded example data, with no external database or cloud authentication required for normal training execution.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Clear Separation of UI, Services, and Data
+Application behavior MUST be organized so that UI pages handle rendering and interaction, services encapsulate business rules, and the data layer defines persistence. This separation MUST make services and data models independently testable and maintainable without coupling business logic into page markup.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Secure-by-Default Authorization
+All protected pages and actions MUST enforce authorization at both the route/page level and the service level. Users MUST only access projects, tasks, notifications, and announcements they are authorized to see, and every new feature MUST include an explicit access-control check before returning sensitive application data.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Locally Reproducible and Observable Development
+The application MUST run end-to-end locally with `dotnet run` and SQLite, and development builds MUST be reproducible on a training workstation without cloud dependencies. Configuration, logging, and database initialization MUST support offline use and make it easy for learners to verify the application behavior on their local machine.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Spec-Driven Development and Review Discipline
+Feature work MUST follow the Spec Kit workflow configured in `.specify/` and `.github/`, including specification, planning, task generation, and review gates. Changes to behavior, architecture, or dependencies MUST be documented in a spec, reviewed before implementation, and aligned with the repository's Spec Kit workflow.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Project Constraints and Standards
+The project MUST target `.NET 10.0` and use `Microsoft.EntityFrameworkCore.Sqlite` for local persistence. The default training experience MUST remain Blazor Server and offline-first, with no production-only cloud dependency paths enabled by default. Code changes MUST preserve the local training architecture, keep `.specify` and `.github` artifacts current, and avoid introducing implementation details that require a production environment to build or run.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow and Quality Gates
+Development MUST follow the GitHub Spec Kit workflow defined in `.specify/workflows/speckit/workflow.yml`. Every pull request affecting this repository MUST:
+- pass `dotnet build`
+- validate local SQLite startup
+- reference the applicable spec and plan
+- include a compliance note when security, data access, or training workflow is affected
+The `agent-context` extension may refresh guidance after spec or plan changes, but constitution changes themselves MUST be committed with a clear governance rationale.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution is the source of truth for ContosoDashboard project practices and supersedes informal conventions. Amendments require a documented rationale, a corresponding update to `.specify` or `README.md` when relevant, and at least one code review approval from a team member familiar with the Spec Kit workflow.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- Security, persistence, and workflow changes MUST include an explicit note in the PR description.
+- New feature branches MUST follow the `specify → plan → tasks → implement` path.
+- Introduction of any new dependency MUST be justified in terms of local training reproducibility and learning value.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-06-24 | **Last Amended**: 2026-06-24
